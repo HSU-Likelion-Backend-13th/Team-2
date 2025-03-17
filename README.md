@@ -8,15 +8,21 @@
 <table width="50%" align="center">
     <tr>
         <td align="center"><b>멘토</b></td>
-<!--         <td align="center"><b>멘티</b></td>
         <td align="center"><b>멘티</b></td>
-        <td align="center"><b>멘티</b></td> -->
+        <td align="center"><b>멘티</b></td>
+        <td align="center"><b>멘티</b></td>
     </tr>
     <tr>
         <td align="center"><img src="https://avatars.githubusercontent.com/u/147326233?v=4"></td>
+        <td align="center"><img src="https://avatars.githubusercontent.com/u/123241668?v=4"></td>
+        <td align="center"><img src="https://avatars.githubusercontent.com/u/203490921?v=4"></td>
+        <td align="center"><img src="https://avatars.githubusercontent.com/u/203607574?v=4"></td>
     </tr>
     <tr>
         <td align="center"><b><a href="https://github.com/khyaejin">김혜진</a></b></td>
+        <td align="center"><b><a href="https://github.com/NaEunMin">나은민</a></b></td>
+        <td align="center"><b><a href="https://github.com/Joonseok-Lee">이준석</a></b></td>
+        <td align="center"><b><a href="https://github.com/zzuhannn">조주한</a></b></td>
     </tr>
 </table>
 
