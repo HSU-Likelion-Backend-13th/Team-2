@@ -4,7 +4,7 @@ import hello.hello_spring.domain.Member;
 
 import java.util.*;
 
-@SuppressWarnings({"FieldMayBeFinal", "SuspiciousMethodCalls"})
+
 public class MemoryMemberRepository  implements MemberRepository {
     private static Map<Long, Member> store = new HashMap<>();
     private static long sequence = 0L;
@@ -17,7 +17,7 @@ public class MemoryMemberRepository  implements MemberRepository {
     }
 
     @Override
-    public Optional<Member> findById(String id) {
+    public Optional<Member> findById(Long id) {
         return Optional.ofNullable(store.get(id));
     }
 
