@@ -1,37 +1,35 @@
 package hello.hello_spring.service;
 
 import hello.hello_spring.domain.Member;
+import hello.hello_spring.repository.MemberRepository;
 import hello.hello_spring.repository.MemoryMemberRepository;
 import org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-// 순수한 단위 테스트가 훨씬 좋음... 훨씬 빠름
-class MemberServiceTest {
+
+// 통합 테스트 - 컨테이너까지 로딩해야 한다면 잘못됐을 가능성이 있음.
+// 물론 해야할 때도 있지만서도 단위테스트로 끝낼만하면 단위로 해보자.
+@SpringBootTest
+@Transactional // 기똥찬 기능. "테스트 케이스에" 붙었을 때만 DB에 커밋 안하게 함.
+class MemberServiceIntergrationTest {
     // test는 한글로 적어도 됨 !
-    MemberService memberService;
-    MemoryMemberRepository memberRepository;
+    @Autowired MemberService memberService;
+    @Autowired MemberRepository memberRepository;
 
-    @BeforeEach
-    public void beforeEach() {
-        memberRepository = new MemoryMemberRepository();
-        memberService = new MemberService(memberRepository);
-    }
-
-    @AfterEach
-    public void afterEach() {
-        memberRepository.clearStore();
-    }
 
     @Test
-    void 회원가입() {
+    void 회원가입() { // 보통은 테스트용 로컬 Or 원격 DB를 운용한다.
         // given data
         Member member = new Member();
         member.setName("spring");
@@ -57,22 +55,6 @@ class MemberServiceTest {
         memberService.join(member1);
         IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(member2));
         assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
-//        try {
-//            memberService.join(member2);
-//            fail();
-//        } catch(IllegalStateException e) {
-//            assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
-//        }
 
-
-        // then
-
-    }
-    @Test
-    void findMembers() {
-    }
-
-    @Test
-    void findOne() {
     }
 }
