@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 // 통합 테스트 - 컨테이너까지 로딩해야 한다면 잘못됐을 가능성이 있음.
 // 물론 해야할 때도 있지만서도 단위테스트로 끝낼만하면 단위로 해보자.
 @SpringBootTest
+
 @Transactional // 기똥찬 기능. "테스트 케이스에" 붙었을 때만 DB에 커밋 안하게 함.
 class MemberServiceIntergrationTest {
     // test는 한글로 적어도 됨 !
