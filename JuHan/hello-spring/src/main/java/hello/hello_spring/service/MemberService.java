@@ -11,13 +11,13 @@ import java.util.Optional;
 
 // 서비스는 메서드 명을 기계적이지 않고 비즈니스 느낌으로 적어야 편리함
 // command + shift + t -> 테스트 클래스 자동 생성 가능
-@Service
+
 public class MemberService {
 
     // final 키워드가 붙으면 더는 값을 변경할 수 없다.
-    // FIX. DI(dependency injection) 의존성 주입 형태
+    // FIX. DI(dependency injection) 형태 -> 생성자 주입
     private final MemberRepository memberRepository;
-    @Autowired
+
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }

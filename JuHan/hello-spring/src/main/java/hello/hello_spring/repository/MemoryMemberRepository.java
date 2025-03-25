@@ -10,7 +10,7 @@ import java.util.*;
  */
 // MemoryMemberRepository는 MemberRepository라는 인터페이스 구현
 
-@Repository
+
 public class MemoryMemberRepository implements MemberRepository {
     private static Map<Long, Member> store = new HashMap<>();
     private static long sequence = 0L;
