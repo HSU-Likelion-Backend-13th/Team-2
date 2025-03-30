@@ -1,11 +1,8 @@
 package hello.core.order;
 
 import hello.core.discount.DiscountPolicy;
-import hello.core.discount.FixDiscountPolicy;
-import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.Member;
-import hello.core.MemberRepository;
-import hello.core.member.MemoryMemberRepository;
+import hello.core.member.MemberRepository;
 
 public class OrderServiceImpl implements OrderService {
     /*
@@ -13,11 +10,17 @@ public class OrderServiceImpl implements OrderService {
      * >> MemberRepository에 접근하여 사용자 등급을 조회하여야 함.
      */
 
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+    // private final MemberRepository memberRepository = new MemoryMemberRepository();
     // private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
 
     // OrderServiceImpl이 아닌, 다른 장소에서 생성되어 의존성 주입해주기
-    private DiscountPolicy discountPolicy;
+    private final MemberRepository memberRepository;
+    private final DiscountPolicy discountPolicy;
+
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
