@@ -1,7 +1,5 @@
 package hello.core.member;
 
-import hello.core.MemberRepository;
-
 public class MemberServiceImpl implements MemberService {
     // 현재 클래스는 MemberRepository Interface를 의존
     // MemberRepository 는 구현체를 참조 중

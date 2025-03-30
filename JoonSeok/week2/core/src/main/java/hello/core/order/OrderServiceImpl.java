@@ -1,8 +1,7 @@
 package hello.core.Order;
 
 import hello.core.member.Member;
-import hello.core.MemberRepository;
-import hello.core.member.MemoryMemberRepository;
+import hello.core.member.MemberRepository;
 
 public class OrderServiceImpl implements OrderService {
     /*
