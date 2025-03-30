@@ -11,12 +11,20 @@ public class OrderServiceImpl implements OrderService {
     //등급마다 가겨이 다름을 생각
     // MemberRepository에 접근하여 등급 조회
 
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
-//    private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
+//    private final MemberRepository memberRepository = new MemoryMemberRepository();
+////    private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
+//
+//
+//    //OrderServiceImpl에 DiscountPolicy구현체를 주입해줘야함.
+//    private DiscountPolicy discountPolicy;
 
+    private final MemberRepository memberRepository;
+    private final DiscountPolicy discountPolicy;
 
-    //OrderServiceImpl에 DiscountPolicy구현체를 주입해줘야함.
-    private DiscountPolicy discountPolicy;
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
