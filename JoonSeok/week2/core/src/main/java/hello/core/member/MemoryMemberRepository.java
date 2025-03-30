@@ -1,5 +1,7 @@
 package hello.core.member;
 
+import hello.core.MemberRepository;
+
 import java.util.HashMap;
 import java.util.Map;
 
