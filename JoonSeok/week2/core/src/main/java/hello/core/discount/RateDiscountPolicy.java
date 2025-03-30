@@ -1,17 +1,17 @@
-package hello.core.Order;
+package hello.core.discount;
 
 import hello.core.member.Grade;
 import hello.core.member.Member;
 
-public class FixDiscountPolicy implements DiscountPolicy {
+// 정률 할인제
+public class RateDiscountPolicy implements DiscountPolicy {
 
-    // 정액 할인
-    private int discountFixAmount = 1000;
+    private int discountRate = 10;
 
     @Override
     public int discount(Member member, int price) {
         if(member.getGrade() == Grade.VIP) {
-            return discountFixAmount;
+            return price * discountRate/100;
         }
         return 0;
     }

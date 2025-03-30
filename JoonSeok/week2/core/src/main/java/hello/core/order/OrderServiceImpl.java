@@ -1,5 +1,8 @@
-package hello.core.Order;
+package hello.core.order;
 
+import hello.core.discount.DiscountPolicy;
+import hello.core.discount.FixDiscountPolicy;
+import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.Member;
 import hello.core.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
@@ -10,13 +13,11 @@ public class OrderServiceImpl implements OrderService {
      * >> MemberRepository에 접근하여 사용자 등급을 조회하여야 함.
      */
 
-
+    private final MemberRepository memberRepository = new MemoryMemberRepository();
+    private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
-
-        MemberRepository memberRepository = new MemoryMemberRepository();
-        DiscountPolicy discountPolicy = new FixDiscountPolicy();
         Member member = memberRepository.findById(memberId); // user grade check
         /*
          *  현재 OrderService 입장에선 할인율은 몰라도 DiscountPolicy 인터페이스가 할인을 적용해주는 중.
