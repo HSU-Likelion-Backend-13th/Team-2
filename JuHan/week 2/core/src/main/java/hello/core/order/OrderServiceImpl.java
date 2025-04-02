@@ -1,6 +1,9 @@
 package hello.core.order;
 
 
+import hello.core.discount.DiscountPolicy;
+import hello.core.discount.FixDiscountPolicy;
+import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
@@ -11,9 +14,14 @@ public class OrderServiceImpl implements OrderService {
      * 사용자의 등급을 조회해서 사용자마다 다른 할인 정책을 적용 해야
      * MemberRepository에 접근해서 사용자 등급을 조회해야 함.
      */
+    // OCP DIP가 위반되는 상황 -> 인터페이스 뿐만 아니라 구체 구현 클레스도 의존함
+    // -> 인테페이스에만 의존할 수 있도록 변경 해주어야 함
 
     private final MemberRepository memberRepository = new MemoryMemberRepository();
-    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
+    //private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
+
+    // -> 누군가가 OrderServiceImpl에 DiscountPolicy의 구현 객체를 대신 생성하고 주입해주어야 함
+    private DiscountPolicy discountPolicy;
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
