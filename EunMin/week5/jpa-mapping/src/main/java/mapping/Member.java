@@ -14,7 +14,7 @@ public class Member {
     private String username;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER) //아무것도 지정 안해주면 (fetch = FetchType.EAGER)가 기본 값이다.
     @JoinColumn(name = "TEAM_ID") //외래키를 잡아준다.
     //여러 멤버는 하나의 팀에 속한다.
     private Team team; //Member의 team이 연관관계의 주인이다.
