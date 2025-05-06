@@ -20,7 +20,8 @@ public class JpaMain {
 
             Member member = new Member();
             member.setUsername("Member1");
-            member.setTeamId(team.getId());
+            // 위에 있는 팀을 받아줌
+            member.setTeam(team);
             em.persist(member);
 
             tx.commit();
