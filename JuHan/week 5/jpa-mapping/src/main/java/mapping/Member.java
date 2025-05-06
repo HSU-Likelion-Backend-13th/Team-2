@@ -13,7 +13,7 @@ public class Member {
     private String username;
 
     @ManyToOne
-    @JoinColumn(name = "TEAM_ID")
+    @JoinColumn(name = "TEAM_ID") // 연관 관계 주인 -> 진짜 매핑
     private Team team;
 
     public Long getId() {
