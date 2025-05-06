@@ -20,8 +20,10 @@ public class JpaMain {
 
             Member member = new Member();
             member.setUsername("Member1");
-            member.setTeamId(team.getId());
+            member.setTeam(team);
             em.persist(member);
+
+
 
             tx.commit();
         }catch (Exception e) {
