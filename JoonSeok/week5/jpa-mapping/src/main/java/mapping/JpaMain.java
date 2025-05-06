@@ -17,28 +17,27 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Team team = new Team();
-            team.setName("Team 1");
-            em.persist(team);
+//            Team team = new Team();
+//            team.setName("Team 3");
+//            em.persist(team);
+//
+//            Member member = new Member();
+//            member.setUsername("Lion");
+//            member.setTeam(team);
+//            em.persist(member);
+//
+//            em.flush();
+//            em.clear(); // 1차 캐시를 초기화 -> 프록시 테스트 가능
+//
+//            Member findMember = em.find(Member.class, member.getId());
+//
+//            // Team은 아직 프록시 상태
+//            System.out.println("team 클래스 : " + findMember.getTeam().getClass());
+//
+//            // 쿼리가 나갈 것
+//            System.out.println("team 이름 : " + findMember.getTeam().getName());
 
-            Member member = new Member();
-            member.setUsername("Member1");
-            member.setTeam(team);
-            em.persist(member);
-
-            Member member2 = new Member();
-            member2.setUsername("Member2");
-            member2.setTeam(team);
-            em.persist(member2);
-
-            em.flush();
-            em.clear();
-
-            Member findMember = em.find(Member.class, member.getId());
-            List<Member> mebers = findMember.getTeam().getMembers();
-            for(Member m : mebers) {
-                System.out.println("멤버 : " + m.getUsername());
-            }
+            List<Member> members = em.createQuery("select m from Member m", Member.class).getResultList();
 
             tx.commit();
         }catch (Exception e) {
