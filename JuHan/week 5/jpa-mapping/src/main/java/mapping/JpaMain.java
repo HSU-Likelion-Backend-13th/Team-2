@@ -6,6 +6,8 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class JpaMain {
@@ -17,29 +19,29 @@ public class JpaMain {
         tx.begin();
 
         try {
-            // 멤버 생성
-            Member member = new Member("주한","성북구","한성대","공학관 코딩라운지");
-            em.persist(member);
+//            Team team = new Team();
+//            team.setName("teamB");
+//            em.persist(team);
+//
+//            Member member = new Member();
+//            member.setUsername("member3");
+//            member.setTeam(team);
+//
+//            em.persist(member);
+//
+//            em.flush();
+//            em.clear();
+//
+//
+//            Member findMember = em.find(Member.class, member.getId());
+//
+//            // team은 프록시 상태
+//            System.out.println("Team 클래스 : " + findMember.getTeam().getClass());
+//
+//            //쿼리 나가는 지점
+//            System.out.println("Team 이름 : " + findMember.getTeam().getName());
 
-            // 아이템 생성
-            Item item = new Item("왕고구마" , 5000 , 5);
-            em.persist(item);
-
-            // OrderItem
-            OrderItem orderItem = new OrderItem();
-            orderItem.setCount(3);
-            orderItem.setOrderPrice(3*item.getPrice());
-            orderItem.setItem(item);
-            em.persist(orderItem);
-
-            // Order
-            Order order = new Order();
-            order.setMember(member);
-            order.setOrderDate(LocalDateTime.now());
-            order.setStatus(OrderStatus.SUCCESS);
-            order.addOrderItem(orderItem); //
-            em.persist(order);
-
+            List<Member> members = em.createQuery("select m from Member m", Member.class).getResultList();
 
 
             tx.commit();

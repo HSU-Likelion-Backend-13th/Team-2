@@ -2,9 +2,6 @@ package mapping;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 public class Member {
     @Id
@@ -12,30 +9,12 @@ public class Member {
     @Column(name = "MEMBER_ID")
     private Long id;
 
-    private String name;
+    @Column(name = "USERNAME")
+    private String username;
 
-    private String city;
-
-    private String street;
-
-    private String zipcode;
-
-    @OneToMany(mappedBy = "member")
-    private List<Order> orders = new ArrayList<>();
-
-    public Member(String name, String city, String street, String zipcode) {
-        this.name = name;
-        this.city = city;
-        this.street = street;
-        this.zipcode = zipcode;
-
-    }
-
-    public Member() {
-
-    }
-
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TEAM_ID") // 연관 관계 주인 -> 진짜 매핑
+    private Team team;
 
     public Long getId() {
         return id;
@@ -45,43 +24,19 @@ public class Member {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getCity() {
-        return city;
+    public Team getTeam() {
+        return team;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }
