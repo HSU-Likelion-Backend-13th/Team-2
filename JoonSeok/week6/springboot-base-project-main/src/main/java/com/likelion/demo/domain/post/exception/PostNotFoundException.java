@@ -4,6 +4,6 @@ import com.likelion.demo.global.exception.BaseException;
 
 public class PostNotFoundException extends BaseException {
     public PostNotFoundException() {
-        super(PostErrorCode.POST_NIT_FOUND_404);
+        super(PostErrorCode.POST_NOT_FOUND_404);
     }
 }
