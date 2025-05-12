@@ -7,8 +7,13 @@ import com.likelion.demo.domain.post.repository.PostRepository;
 import com.likelion.demo.domain.post.web.DTO.CreatePostReq;
 import com.likelion.demo.domain.post.web.DTO.CreatePostRes;
 import com.likelion.demo.domain.post.web.DTO.PostDetailRes;
+import com.likelion.demo.domain.post.web.DTO.PostSummaryRes;
+import com.likelion.demo.domain.post.web.DTO.PostSummaryRes.PostSummary;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -53,5 +58,26 @@ public class PostServiceImpl implements PostService {
                 post.getCreatedAt(),
                 post.getUpdatedAt()
         );
+    }
+
+    @Override
+    public PostSummaryRes getAll() {
+        // 1. DB 에서 모든 Post 조회 (postRepository)
+        List<Post> posts = postRepository.findAll();
+
+        // 2. posts -> PostSummaryRes 변환
+        List<PostSummary> postSummaryList = new ArrayList<>();
+        for(Post post : posts) {
+            PostSummary postSummary = new PostSummary(
+                    post.getId(),
+                    post.getTitle(),
+                    post.getUsername(),
+                    post.getCreatedAt()
+            );
+            postSummaryList.add(postSummary);
+        }
+
+        // 3. 반환
+        return new PostSummaryRes(postSummaryList);
     }
 }
