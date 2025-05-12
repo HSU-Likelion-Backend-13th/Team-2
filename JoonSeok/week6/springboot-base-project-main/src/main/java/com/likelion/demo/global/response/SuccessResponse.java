@@ -35,6 +35,7 @@ public class SuccessResponse<T> extends BaseResponse{
         return new SuccessResponse<>(null, GlobalSuccessCode.SUCCESS_OK);
     }
 
+    // 200 OK 응답 (data가 null)
     public static <T> SuccessResponse<T> of(T data, BaseResponseCode baseResponseCode) {
         return new SuccessResponse<>(data, baseResponseCode);
     }
