@@ -2,9 +2,11 @@ package com.likelion.demo.domain.post.service;
 
 import com.likelion.demo.domain.post.entity.Post;
 import com.likelion.demo.domain.post.entity.PostState;
+import com.likelion.demo.domain.post.exception.PostNotFoundException;
 import com.likelion.demo.domain.post.repository.PostRepository;
 import com.likelion.demo.domain.post.web.DTO.CreatePostReq;
 import com.likelion.demo.domain.post.web.DTO.CreatePostRes;
+import com.likelion.demo.domain.post.web.DTO.PostDetailRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +32,26 @@ public class PostServiceImpl implements PostService {
 
         // 3. CreatePostRes 반환
         return new CreatePostRes(savedPost.getId());
+    }
+
+    // 게시글 단건 조회
+    @Override
+    public PostDetailRes getById(Long postId) {
+        // 1. postId에 해당하는 Post - DB에서 조회
+        Post post = postRepository.findById(postId)
+                // 404 - postId에
+                .orElseThrow(PostNotFoundException::new);
+
+        // 2. PostDetailRes 반환
+        return new PostDetailRes(
+                post.getId(),
+                post.getTitle(),
+                post.getContent(),
+                post.getUsername(),
+                post.getPassword(),
+                post.getState(),
+                post.getCreatedAt(),
+                post.getUpdatedAt()
+        );
     }
 }
