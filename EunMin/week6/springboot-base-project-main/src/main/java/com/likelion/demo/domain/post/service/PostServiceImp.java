@@ -102,4 +102,18 @@ public class PostServiceImp implements PostService {
                 foundPost.getUpdatedAt()
         );
     }
+
+    //게시글 삭제
+    @Transactional
+    @Override
+    public void deleteOne(long postId, DeletePostReq deletePostReq) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(PostNotFoundException::new);
+
+        if(!post.getPassword().equals(deletePostReq.getPassword())){
+            throw new InvalidPasswordException();
+        }
+
+        postRepository.delete(post);
+    }
 }

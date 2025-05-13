@@ -70,5 +70,15 @@ public class PostController {
 
 
     //게시글 삭제
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<SuccessResponse<?>> deletePost(@PathVariable long postId
+        ,@RequestBody DeletePostReq deletePostReq){
+        postService.deleteOne(postId, deletePostReq);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(SuccessResponse.empty());
+                //.body(SuccessResponse.ok(null));
+    }
 
 }
