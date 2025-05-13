@@ -2,14 +2,13 @@ package com.likelion.demo.domain.post.service;
 
 import com.likelion.demo.domain.post.entity.Post;
 import com.likelion.demo.domain.post.entity.PostState;
+import com.likelion.demo.domain.post.exception.InvalidPasswordException;
 import com.likelion.demo.domain.post.exception.PostNotFoundException;
 import com.likelion.demo.domain.post.repository.PostRepository;
-import com.likelion.demo.domain.post.web.dto.CreatePostReq;
-import com.likelion.demo.domain.post.web.dto.CreatePostRes;
-import com.likelion.demo.domain.post.web.dto.PostDetailRes;
-import com.likelion.demo.domain.post.web.dto.PostSummaryRes;
+import com.likelion.demo.domain.post.web.dto.*;
 import com.likelion.demo.domain.post.web.dto.PostSummaryRes.PostSummary;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,5 +77,29 @@ public class PostServiceImp implements PostService {
         }
         return new PostSummaryRes(postSummaryList);
 
+    }
+
+
+    @Transactional
+    @Override
+    public PostDetailRes modifyOne(long postId, ModifyPostReq modifyPostReq) {
+        Post foundPost = postRepository.findById(postId)
+                .orElseThrow(PostNotFoundException::new);
+
+        if(!foundPost.getPassword().equals(modifyPostReq.getPassword())){
+            throw new InvalidPasswordException();
+        }
+
+        foundPost.modify(modifyPostReq.getTitle(), modifyPostReq.getContent());
+        return new PostDetailRes(
+                foundPost.getId(),
+                foundPost.getTitle(),
+                foundPost.getContent(),
+                foundPost.getUsername(),
+                foundPost.getPassword(),
+                foundPost.getState(),
+                foundPost.getCreatedAt(),
+                foundPost.getUpdatedAt()
+        );
     }
 }
