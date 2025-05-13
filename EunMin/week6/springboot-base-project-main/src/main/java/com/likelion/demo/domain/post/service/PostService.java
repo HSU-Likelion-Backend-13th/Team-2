@@ -3,6 +3,7 @@ package com.likelion.demo.domain.post.service;
 import com.likelion.demo.domain.post.web.dto.CreatePostReq;
 import com.likelion.demo.domain.post.web.dto.CreatePostRes;
 import com.likelion.demo.domain.post.web.dto.PostDetailRes;
+import com.likelion.demo.domain.post.web.dto.PostSummaryRes;
 
 public interface PostService {
 
@@ -10,4 +11,6 @@ public interface PostService {
     CreatePostRes createOne(CreatePostReq createPostReq);
 
     PostDetailRes getById(long postid);
+
+    PostSummaryRes getAll();
 }

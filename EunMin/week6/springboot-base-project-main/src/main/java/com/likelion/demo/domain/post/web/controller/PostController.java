@@ -4,6 +4,7 @@ import com.likelion.demo.domain.post.service.PostService;
 import com.likelion.demo.domain.post.web.dto.CreatePostReq;
 import com.likelion.demo.domain.post.web.dto.CreatePostRes;
 import com.likelion.demo.domain.post.web.dto.PostDetailRes;
+import com.likelion.demo.domain.post.web.dto.PostSummaryRes;
 import com.likelion.demo.global.response.SuccessResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -43,7 +44,14 @@ public class PostController {
 
 
     //게시글 전체 조회
+    @GetMapping
+    public ResponseEntity<SuccessResponse<?>> getAllPosts(){
+        PostSummaryRes postSummaryRes = postService.getAll();
 
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(SuccessResponse.ok(postSummaryRes));
+    }
 
 
     //게시글 수정

@@ -7,7 +7,12 @@ import com.likelion.demo.domain.post.repository.PostRepository;
 import com.likelion.demo.domain.post.web.dto.CreatePostReq;
 import com.likelion.demo.domain.post.web.dto.CreatePostRes;
 import com.likelion.demo.domain.post.web.dto.PostDetailRes;
+import com.likelion.demo.domain.post.web.dto.PostSummaryRes;
+import com.likelion.demo.domain.post.web.dto.PostSummaryRes.PostSummary;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PostServiceImp implements PostService {
@@ -54,5 +59,24 @@ public class PostServiceImp implements PostService {
                 post.getCreatedAt(),
                 post.getUpdatedAt()
         );
+    }
+
+    @Override
+    public PostSummaryRes getAll() {
+        List<Post> posts = postRepository.findAll();
+
+        List<PostSummary> postSummaryList = new ArrayList<>();
+        for(Post post : posts){
+            PostSummary postSummary = new PostSummary(
+                    post.getId(),
+                    post.getTitle(),
+                    post.getUsername(),
+                    post.getCreatedAt()
+            );
+
+            postSummaryList.add(postSummary);
+        }
+        return new PostSummaryRes(postSummaryList);
+
     }
 }
