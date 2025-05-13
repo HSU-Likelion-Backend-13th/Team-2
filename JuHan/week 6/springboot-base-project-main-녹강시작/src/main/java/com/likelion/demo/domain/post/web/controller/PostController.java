@@ -4,12 +4,14 @@ import com.likelion.demo.domain.post.service.PostService;
 import com.likelion.demo.domain.post.web.dto.CreatePostReq;
 import com.likelion.demo.domain.post.web.dto.CreatePostRes;
 import com.likelion.demo.domain.post.web.dto.PostDetailRes;
+import com.likelion.demo.domain.post.web.dto.PostSummeryRes;
 import com.likelion.demo.global.response.SuccessResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 
 @RestController
@@ -45,7 +47,16 @@ public class PostController {
     }
 
     // 게시글 전체 조회
+    @GetMapping
+    public ResponseEntity<SuccessResponse<?>> getAllPosts() {
+        //서비스 로직
+        PostSummeryRes postSummeryRes = postService.getByall();
+        // 반환
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(SuccessResponse.ok(postSummeryRes));
 
+    }
     // 게시글 수정
 
     // 게시글 삭제

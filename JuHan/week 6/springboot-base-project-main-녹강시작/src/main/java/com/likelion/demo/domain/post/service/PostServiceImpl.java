@@ -4,9 +4,14 @@ import com.likelion.demo.domain.post.entity.Post;
 import com.likelion.demo.domain.post.entity.PostState;
 import com.likelion.demo.domain.post.exception.PostNotFoundException;
 import com.likelion.demo.domain.post.repository.PostRepository;
+import com.likelion.demo.domain.post.web.dto.PostSummeryRes;
+import com.likelion.demo.domain.post.web.dto.PostSummeryRes.PostSummery;
 import com.likelion.demo.domain.post.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -49,6 +54,26 @@ public class PostServiceImpl implements PostService {
                 post.getCreatedAt(),
                 post.getUpdatedAt()
         );
+    }
+
+    @Override
+    public PostSummeryRes getByall() {
+        // 1. DB에 있는 Post 전체 조회(postRepository 사용)
+        List<Post> posts = postRepository.findAll();
+        // 2. posts -> postSummeryRes
+        List<PostSummery> postSummaryList = new ArrayList<>();
+        for (Post post : posts) {
+            PostSummery postSummery = new PostSummery(
+                    post.getId(),
+                    post.getTitle(),
+                    post.getUsername(),
+                    post.getCreatedAt()
+            );
+            postSummaryList.add(postSummery);
+
+        }
+        // 3. 반환
+        return new PostSummeryRes(postSummaryList);
     }
 
 }
