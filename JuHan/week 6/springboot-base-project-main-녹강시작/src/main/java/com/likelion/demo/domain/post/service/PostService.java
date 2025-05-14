@@ -11,4 +11,7 @@ public interface PostService {
 
     // 게시글 전체 조회
     PostSummeryRes getByall();
+
+    // 게시글 수정
+    PostDetailRes modifyOne(Long postId, ModifyPostReq modifyPostReq);
 }
