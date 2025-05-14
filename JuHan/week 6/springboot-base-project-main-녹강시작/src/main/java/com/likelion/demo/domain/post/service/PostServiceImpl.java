@@ -108,4 +108,22 @@ public class PostServiceImpl implements PostService {
         );
     }
 
+    @Transactional
+    @Override
+    public void deleteOne(Long postId, DeletePostReq deletePostReq) {
+        // 1. DB에 있는 PostId 로 Post 찾기
+        Post post = postRepository.findById(postId)
+                // 404 - 게시글이 존재 하지 않음
+                .orElseThrow(PostNotFoundException::new);
+        // 2. 비밀번호 검증
+        // 403 - 비밀번호 불일치
+        if (!post.getPassword().equals(deletePostReq.getPassword())) {
+            throw new InvalidPasswordException();
+        }
+        // 3. post 삭제
+        postRepository.delete(post);
+
+
+    }
+
 }

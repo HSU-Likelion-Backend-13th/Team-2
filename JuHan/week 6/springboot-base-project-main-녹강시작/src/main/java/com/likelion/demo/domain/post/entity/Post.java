@@ -29,4 +29,5 @@ public class Post extends BaseEntity {
         this.content = content;
     }
 
+
 }
