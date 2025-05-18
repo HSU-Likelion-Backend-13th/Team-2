@@ -1,10 +1,7 @@
 package com.likelion.demo.domain.comment.web.controller;
 
 import com.likelion.demo.domain.comment.service.CommentService;
-import com.likelion.demo.domain.comment.web.dto.CommentDetailRes;
-import com.likelion.demo.domain.comment.web.dto.CommentSummaryRes;
-import com.likelion.demo.domain.comment.web.dto.CreateCommentReq;
-import com.likelion.demo.domain.comment.web.dto.CreateCommentRes;
+import com.likelion.demo.domain.comment.web.dto.*;
 import com.likelion.demo.global.response.SuccessResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -49,5 +46,32 @@ public class CommentController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(SuccessResponse.ok(res));
+    }
+
+    @PutMapping("/{commentId}")
+    public ResponseEntity<SuccessResponse<?>> modifyComment(
+            @PathVariable Long postId,
+            @PathVariable Long commentId,
+            @RequestBody ModifyCommentReq modifyCommentReq
+    ) {
+        CommentDetailRes res = commentService.modifyComment(postId, commentId, modifyCommentReq);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(SuccessResponse.ok(res));
+    }
+
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<SuccessResponse<?>> deleteComment(
+            @PathVariable Long postId,
+            @PathVariable Long commentId,
+            @RequestBody DeleteCommentReq deleteCommentReq
+    ) {
+
+        commentService.delete(postId, commentId, deleteCommentReq);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(SuccessResponse.empty());
     }
 }

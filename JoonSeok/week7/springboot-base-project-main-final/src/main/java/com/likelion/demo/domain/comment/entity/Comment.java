@@ -27,4 +27,8 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
+    public void modify(String username, String content) {
+        this.username = username;
+        this.content = content;
+    }
 }
