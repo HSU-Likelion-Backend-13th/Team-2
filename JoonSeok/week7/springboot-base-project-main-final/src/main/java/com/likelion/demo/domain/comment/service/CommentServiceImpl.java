@@ -61,7 +61,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentDetailRes getComment(Long postId, Long commentId) {
         Comment comment = commentRepository.findById(commentId).orElseThrow(CommentNotFoundException::new);
-        if(comment.getPost().getId().equals(postId)) {
+        if(!comment.getPost().getId().equals(postId)) {
             throw new CommentNotFoundException();
         }
         return new CommentDetailRes(
