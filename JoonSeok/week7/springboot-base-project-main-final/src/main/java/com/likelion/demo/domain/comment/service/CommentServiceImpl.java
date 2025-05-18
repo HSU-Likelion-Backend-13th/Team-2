@@ -60,7 +60,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDetailRes getComment(Long postId, Long commentId) {
-        Comment comment = commentRepository.findById(commentId).orElseThrow(CommentNotFoundException::new);
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(CommentNotFoundException::new);
         if(!comment.getPost().getId().equals(postId)) {
             throw new CommentNotFoundException();
         }
@@ -76,15 +77,20 @@ public class CommentServiceImpl implements CommentService {
 
     @Transactional
     @Override
-    public CommentDetailRes modifyComment(Long postId, Long commentId, ModifyCommentReq modifyCommentReq) {
+    public CommentDetailRes modifyComment(
+            Long postId,
+            Long commentId,
+            ModifyCommentReq modifyCommentReq) {
         // comment id 조회
         Comment comment = commentRepository.findById(commentId)
                 // 404
                 .orElseThrow(CommentNotFoundException::new);
         // 다를 시, 403 에러
+        // 댓글 번호가 다를 경우,
         if(!comment.getPost().getId().equals(postId)) {
             throw new CommentNotFoundException();
         }
+        // 게시글 번호가 다를 경우
         if(!comment.getPassword().equals(modifyCommentReq.getPassword())) {
             throw new CommentInvalidPassword();
         }
@@ -105,12 +111,18 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     @Override
     public void delete(Long postId, Long commentId, DeleteCommentReq deleteCommentReq) {
+        // comment id 조회
         Comment comment = commentRepository.findById(commentId)
+                // 다를 시, 404 에러 반환
                 .orElseThrow(CommentNotFoundException::new);
+        // 비밀번호 다를 시, 403 에러 반환
         if(!comment.getPassword().equals(deleteCommentReq.getPassword())) {
             throw new CommentInvalidPassword();
         }
 
+        // 삭제
         commentRepository.delete(comment);
+
+        // 반환 - 없음
     }
 }
