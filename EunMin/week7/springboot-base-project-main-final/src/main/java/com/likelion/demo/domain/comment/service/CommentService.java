@@ -8,4 +8,6 @@ public interface CommentService {
     CommentDetailRes getById(Long id, Long commentId);
 
     CommentDetailRes modifyOneComment(Long commentId, ModifyCommentReq modifyCommentReq);
+
+    void deleteOne(Long commentId, DeleteCommentReq deleteCommentReq);
 }

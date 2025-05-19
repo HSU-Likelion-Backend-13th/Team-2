@@ -99,4 +99,21 @@ public class CommentServiceImp implements CommentService {
                 foundComment.getUpdatedAt()
         );
     }
+
+    @Transactional
+    @Override
+    public void deleteOne(Long commentId, DeleteCommentReq deleteCommentReq) {
+
+        //삭제할 댓글이 존재하는지 확인
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(CommentNotFoundException::new);
+
+        //비밀번호 검증
+        if(!comment.getPassword().equals(deleteCommentReq.getPassword())){
+            throw new CommentInvalidPassword();
+        }
+
+        //댓글 삭제
+        commentRepository.delete(comment);
+    }
 }
