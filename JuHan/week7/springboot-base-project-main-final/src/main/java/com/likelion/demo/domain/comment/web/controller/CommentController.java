@@ -54,4 +54,15 @@ public class CommentController {
                 .body(SuccessResponse.ok(res));
                                                             }
 
+    @DeleteMapping({"/{commentId}"})
+    public ResponseEntity<SuccessResponse<?>> deleteComment(@PathVariable Long postId,
+                                                            @PathVariable Long commentId,
+                                                            @RequestBody @Valid DeleteCommentReq deleteCommentReq) {
+        commentService.deleteOne(postId, commentId, deleteCommentReq);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(SuccessResponse.empty());
+    }
+
 }

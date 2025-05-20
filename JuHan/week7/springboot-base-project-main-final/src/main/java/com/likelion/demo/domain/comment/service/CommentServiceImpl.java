@@ -59,6 +59,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional
     public CommentDetailRes getById(Long postId, Long commentId) {
         Comment comment = commentRepository.findById(commentId).orElseThrow(CommentNotFoundException::new);
 
@@ -102,4 +103,21 @@ public class CommentServiceImpl implements CommentService {
         );
 
     }
+
+    @Override
+    @Transactional
+    public void deleteOne(Long postId, Long commentId, DeleteCommentReq deleteCommentReq) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(CommentNotFoundException::new);
+
+        if (!comment.getPost().getId().equals(postId)){
+            throw new PostNotFoundException();
+        }
+
+        if (!comment.getPassword().equals(deleteCommentReq.getPassword())){
+            throw new InvalidPasswordException();
+        }
+
+        commentRepository.delete(comment);
+}
 }
